@@ -59,7 +59,15 @@ router.get('/signup', function(req,res){
 router.post('/signup' ,function(req,res,next){
     var user = new User();
     user.profile.name = req.body.name;
+    if(!req.body.email){
+        req.flash('errors',"Email field is require for signup.");
+        return res.redirect('/signup');
+    }
     user.email = req.body.email;
+    if(!req.body.password){
+        req.flash('errors',"Password field is require for signup.");
+        return res.redirect('/signup');
+    }
     user.password = req.body.password;
     user.profile.picture = user.gravatar();
     User.findOne({email: req.body.email}, function(err, existingUser){
