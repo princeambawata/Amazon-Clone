@@ -52,7 +52,7 @@ router.get('/signup', function(req,res){
    if(!req.user){ 
     res.render('accounts/signup.ejs',{errors: req.flash('errors')});
    }else{
-     res.render('/');
+     return res.redirect('/');
    }
 });
 
