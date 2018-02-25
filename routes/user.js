@@ -1,7 +1,9 @@
 var router = require('express').Router();
 var passport = require('passport');
+var async = require('async');
 var passportConfig = require('../config/passport');
 var User = require('../models/user');
+var Cart = require('../models/cart');
 
 router.get('/edit-profile',function(req,res,next){
     if(!req.user) return res.redirect('/login')
@@ -57,6 +59,9 @@ router.get('/signup', function(req,res){
 });
 
 router.post('/signup' ,function(req,res,next){
+ 
+  async.waterfall([
+    function(callback){
     var user = new User();
     user.profile.name = req.body.name;
     if(!req.body.email){
@@ -79,15 +84,24 @@ router.post('/signup' ,function(req,res,next){
                 if(err){
                     return next(err);
                 }else{
-                   req.logIn(user,function(err){
-                       if(err) return next(err);
-                       res.redirect('/profile');
-                   });
+                   callback(null,user);
                 }
             });
         }
     });
+  },
+  function(user){
+    var cart = new Cart();
+    cart.owner = user._id;
+    cart.save(function(err){
+      if (err) return next(err);
+      req.logIn(user,function(err){
+      if(err) return next(err);
+        res.redirect('/profile');
+      }); 
+    }); 
+  }
+ ])
 });
-
 
 module.exports = router;

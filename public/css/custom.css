@@ -5,8 +5,11 @@ body {
   margin-top: -4%;
 
 }
+.pagination{
+    margin-left:16px;
+}
 #myFooter {
-    background-color: #1d1d1d;
+    background-color: #1d1919;
     color: #959595;
     padding-top: 30px;
 }

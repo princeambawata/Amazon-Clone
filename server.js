@@ -13,7 +13,6 @@ var passport = require('passport');
 
 var secret = require('./config/secret');
 var Category = require('./models/category');
-
 var app = express();
 
 mongoose.connect(secret.database, function(err){

@@ -1,9 +1,37 @@
 var router = require('express').Router();
 var Product = require('../models/product');
 
-router.get('/',function(req, res){
-   res.render('main/home')
+function paginate(req, res, next) {
+
+  var perPage = 12;
+  var page = req.params.page - 1;
+
+  Product
+    .find()
+    .skip( perPage * page)
+    .limit( perPage )
+    .populate('category')
+    .exec(function(err, products) {
+      if (err) return next(err);
+      Product.count().exec(function(err, count) {
+        if (err) return next(err);
+        return res.render('main/product-main', {
+          products: products,
+          pages: count / perPage
+        });
+      });
+    });
+
+}
+router.get('/',function(req, res,next){
+  paginate(req,res,next);
 });
+
+router.get('/page/:page',function(req,res,next){
+  paginate(req,res,next);
+})
+
+
 
 router.get('/products/:id', function(req, res, next) {
   Product
@@ -23,7 +51,6 @@ router.get('/product/:id', function(req,res,next){
       res.render('main/product',{product: product});
    });
 });
-
 
 Product.createMapping(function(err, mapping) {
   if (err) {
@@ -71,5 +98,7 @@ router.get('/search', function(req, res, next) {
     });
   }
 });
+
+
 
 module.exports = router;
