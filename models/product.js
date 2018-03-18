@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var mongoosastic = require('mongoosastic');
+var secret = require('../config/secret');
 var Schema = mongoose.Schema;
 
 var ProductSchema = new Schema({
@@ -11,7 +12,7 @@ var ProductSchema = new Schema({
 
 ProductSchema.plugin(mongoosastic, {
   hosts: [
-    'https://intense-taiga-19850.herokuapp.com:9200'
+    'secret.port:9200'
   ]
 });
 
