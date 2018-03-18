@@ -16,7 +16,7 @@ var UserSchema = new Schema({
 
   address: {type: String},
   history: [{
-  	date: Date,
+    item: {type: Schema.Types.ObjectId, ref: 'Product'},
   	paid: {type: Number , default: 0}
   }]
 

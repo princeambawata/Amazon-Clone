@@ -45,9 +45,16 @@ router.post('/login', passport.authenticate('local-login',{
     failureFlash: true
 }));
 
-router.get('/profile',function(req,res,next){
-    if(!req.user) return res.redirect('/login')
-    res.render('accounts/profile',{user: req.user});
+router.get('/profile',passportConfig.isAuthenticated,function(req,res,next){
+    User
+        .findById(req.user._id)
+        .populate('history.item')
+        .exec(function(err,foundUser){
+             if(err) return next(err);
+             res.render('accounts/profile',{
+              user: foundUser
+             })
+        });
 });
 
 router.get('/signup', function(req,res){
