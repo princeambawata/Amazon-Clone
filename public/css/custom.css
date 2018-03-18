@@ -139,3 +139,10 @@ body{
    -webkit-flex: 0 0 auto;
 }
 
+.product-image{
+    width: 100%;
+}
+
+img.pull-right{
+    margin-top:-14px;
+}

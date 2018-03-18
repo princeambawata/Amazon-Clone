@@ -1,6 +1,5 @@
 <% layout('layout') -%>
 
-
 <% if (data.length === 0)  { %>
   <h3 class="container">Search for <%= query %> not found</h3>
 <% } else {%>
@@ -15,7 +14,6 @@
           <img src="<%= data[i]._source.image %>">
           <div class="caption">
             <h3><%= data[i]._source.name %></h3>
-            <p><%= data[i]._source.category.name %></h3>
             <p>Rs.<%= data[i]._source.price %></p>
           </div>
         </div>

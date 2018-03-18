@@ -23,13 +23,17 @@ router.post('/:name',function(req,res,next){
            }); 
     	},
     	function(category,callback){
-    		for(var i=0;i<30;i++){
+    		for(var i=0;i<1;i++){
               var product = new Products();
               product.category = category._id;
               product.name = faker.commerce.productName();
               product.price = faker.commerce.price();
               product.image = faker.image.image();
-              product.save();
+              product.save(function (err) {
+                  if(err) {
+                      return next(err);
+                  }
+              });
     		}
     		res.json({message: "Success"});
     	}
