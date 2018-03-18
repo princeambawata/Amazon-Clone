@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var mongoosastic = require('mongoosastic');
-var secret = require('../config/secret');
 var Schema = mongoose.Schema;
 
 var ProductSchema = new Schema({
@@ -12,7 +11,7 @@ var ProductSchema = new Schema({
 
 ProductSchema.plugin(mongoosastic, {
   hosts: [
-    'secret.port:9200'
+    'localhost:9200'
   ]
 });
 
