@@ -11,7 +11,7 @@ var ProductSchema = new Schema({
 
 ProductSchema.plugin(mongoosastic, {
   hosts: [
-    'localhost:9200'
+    'https://intense-taiga-19850.herokuapp.com:9200'
   ]
 });
 
